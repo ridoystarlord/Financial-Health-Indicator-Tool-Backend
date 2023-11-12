@@ -1,5 +1,5 @@
 {
-  "name": "financial-health-indicator-tool",
+  "name": "financial-health-indicator-tool-backend",
   "version": "1.0.0",
   "main": "./dis/index.js",
   "license": "MIT",

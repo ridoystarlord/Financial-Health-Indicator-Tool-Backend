@@ -1,0 +1,43 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String   @id @default(uuid())
+  name     String
+  email    String   @unique
+  password String
+  salt     String
+  company  Company?
+
+  @@map("Users")
+}
+
+model Company {
+  id                   String                 @id @default(uuid())
+  companyName          String
+  userId               String                 @unique
+  User                 User                   @relation(fields: [userId], references: [id])
+  MonthlyFinancialData MonthlyFinancialData[]
+
+  @@map("Company")
+}
+
+model MonthlyFinancialData {
+  id          String  @id @default(uuid())
+  monthName   String
+  income      Float
+  healthScore Float
+  expenses    Float
+  debts       Float
+  assets      Float
+  companyId   String
+  Company     Company @relation(fields: [companyId], references: [id])
+
+  @@map("MonthlyFinancialData")
+}

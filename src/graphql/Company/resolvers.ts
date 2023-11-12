@@ -3,6 +3,7 @@ import {
   createMonthlyDataUserPayload,
 } from "../../Services/Company";
 import { UserService } from "../../Services/User";
+import { calculateHealthScoreForAMonth } from "../../utils";
 
 const queries = {
   getCompanyMonthlyData: async (_: any, payload: any, context: any) => {
@@ -47,7 +48,12 @@ const mutations = {
       throw new Error("User doesn't have company");
     }
     const { income, expenses, debts, assets, ...rest } = payload;
-    const score = (income + assets - expenses - debts) / 1000;
+    const score = calculateHealthScoreForAMonth(
+      income,
+      expenses,
+      debts,
+      assets
+    );
     await CompanyService.createMonthData({
       ...payload,
       companyId: user?.company?.id,

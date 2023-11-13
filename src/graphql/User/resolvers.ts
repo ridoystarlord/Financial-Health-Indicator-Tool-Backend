@@ -10,7 +10,7 @@ const queries = {
   },
 };
 const mutations = {
-  createUser: async (_: any, payload: createUserPayload) => {
+  RegisterUser: async (_: any, payload: createUserPayload) => {
     await UserService.createUser(payload);
     return { success: true, message: "User Register Successful", error: null };
   },
